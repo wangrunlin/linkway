@@ -1,16 +1,15 @@
 export const siteName =
-  process.env.NEXT_PUBLIC_SITE_NAME || "SEO Next.js Starter";
+  process.env.NEXT_PUBLIC_SITE_NAME || "Link Way";
 
 export const title =
-  process.env.NEXT_PUBLIC_TITLE ||
-  "SEO Next.js Starter - A Starter Template for SEO Optimized Next.js Projects";
+  process.env.NEXT_PUBLIC_TITLE || "Link Way - 连接无限可能的智能导航平台";
 
 export const description =
   process.env.NEXT_PUBLIC_DESCRIPTION ||
-  "A simple and easy-to-use starter template for building SEO optimized Next.js applications with best practices and performance in mind.";
+  "Link Way 是一款基于先进多维表格数据库构建的创新型网络资源导航平台，旨在为内容创作者、电商从业者以及广大网络用户提供简洁、高效、智能的导航体验。我们突破传统导航方式，创新性地将 AI 大模型的能力融入到信息检索和组织中，为用户提供更加智能、个性化的信息发现和连接方式。";
 
 // Last baseURL
-const defaultBaseURL = "https://seo-nextjs-starter.vercel.app";
+const defaultBaseURL = "https://linkway.alin.run";
 
 // Vercel baseURL, make sure it's a valid URL
 const VERCEL_URL =
