@@ -16,7 +16,13 @@ export default function Footer() {
         </Link>
         <Link
           className="hover:text-gray-900 dark:hover:text-gray-100"
-          href="https://github.com/wangrunlin/seo-nextjs-starter"
+          href="/freeCodeCamp-video"
+        >
+          FreeCodeCamp Video
+        </Link>
+        <Link
+          className="hover:text-gray-900 dark:hover:text-gray-100"
+          href="https://github.com/wangrunlin/linkway"
           target="_blank"
           rel="noopener noreferrer"
         >
