@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Footer from "@/components/Footer";
 import { baseURL, description, siteName, title } from "@/config";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const metadata: Metadata = {
   title,
@@ -46,7 +47,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="min-h-screen bg-background text-foreground">
+        <div className="fixed top-4 right-4">
+          <ThemeToggle />
+        </div>
+
         <main>{children}</main>
 
         <Footer />
