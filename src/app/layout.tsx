@@ -18,9 +18,14 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/icon?<generated>",
-    shortcut: "/icon?<generated>",
-    apple: "/icon?<generated>",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-192.png", sizes: "192x192" },
+      { url: "/icon-512.png", sizes: "512x512" },
+    ],
+    apple: {
+      url: "/apple-touch-icon.png",
+    },
   },
   alternates: {
     canonical: baseURL,
