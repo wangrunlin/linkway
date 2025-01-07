@@ -3,35 +3,34 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="text-center text-gray-500 dark:text-gray-400 py-4">
-      <div className="flex justify-center items-center gap-4">
-        <Link className="hover:text-gray-900 dark:hover:text-gray-100" href="/">
-          Home
-        </Link>
-        <Link
-          className="hover:text-gray-900 dark:hover:text-gray-100"
-          href="/about"
-        >
-          About
-        </Link>
-        <Link
-          className="hover:text-gray-900 dark:hover:text-gray-100"
-          href="/freeCodeCamp-video"
-        >
-          FreeCodeCamp Video
-        </Link>
-        <Link
-          className="hover:text-gray-900 dark:hover:text-gray-100"
-          href="https://github.com/wangrunlin/linkway"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Github
-        </Link>
+    <footer className="border-t border-border/40">
+      <div className="container flex flex-col items-center gap-4 py-8 md:flex-row md:justify-between">
+        <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-6">
+          <Link 
+            href="/" 
+            className="text-sm hover:text-foreground/80 transition-colors"
+          >
+            Home
+          </Link>
+          <Link 
+            href="/about"
+            className="text-sm hover:text-foreground/80 transition-colors"
+          >
+            About
+          </Link>
+          <Link
+            href="https://github.com/wangrunlin/linkway"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm hover:text-foreground/80 transition-colors"
+          >
+            GitHub
+          </Link>
+        </div>
+        <p className="text-sm text-muted-foreground">
+          &copy; {new Date().getFullYear()} {siteName}. All rights reserved.
+        </p>
       </div>
-      <p className="mt-4">
-        &copy; {new Date().getFullYear()} {siteName}
-      </p>
     </footer>
   );
 }

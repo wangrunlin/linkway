@@ -1,5 +1,5 @@
 import { getList } from "@/api/nocodb";
-import { ITEMS_PER_PAGE } from "@/config";
+import { PAGE_SIZE } from "@/config";
 import { VideoMetadata } from "@/types";
 
 export async function getVideoData(page: number = 1) {
@@ -7,7 +7,7 @@ export async function getVideoData(page: number = 1) {
   const { list, pageInfo } = data;
 
   const totalRows = pageInfo?.totalRows || list.length;
-  const totalPages = Math.max(1, Math.ceil(totalRows / ITEMS_PER_PAGE));
+  const totalPages = Math.max(1, Math.ceil(totalRows / PAGE_SIZE));
 
   return {
     list,

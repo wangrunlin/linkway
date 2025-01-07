@@ -6,7 +6,7 @@ export default async function Home() {
   const { list } = await getVideoData(1);
 
   return (
-    <main className="container mx-auto px-4 py-8">
+    <div className="py-8">
       <div className="text-center mb-16">
         <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           首页
@@ -54,6 +54,6 @@ export default async function Home() {
           </svg>
         </Link>
       </div>
-    </main>
+    </div>
   );
 }

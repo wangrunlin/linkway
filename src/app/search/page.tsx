@@ -1,6 +1,5 @@
 import { Pagination } from "@/components/Pagination";
 import { VideoCard } from "@/components/VideoCard";
-import { ITEMS_PER_PAGE } from "@/config";
 import { getVideoData } from "@/lib/getVideoData";
 
 export default async function Search({
@@ -10,7 +9,7 @@ export default async function Search({
 }) {
   const params = await searchParams;
   const currentPage = Number(params.page) || 1;
-  const { list, totalRows, totalPages } = await getVideoData(currentPage);
+  const { list, totalPages } = await getVideoData(currentPage);
 
   return (
     <main className="container mx-auto px-4 py-8">
@@ -28,12 +27,7 @@ export default async function Search({
       </div>
 
       {list.length > 0 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          totalItems={totalRows}
-          pageSize={ITEMS_PER_PAGE}
-        />
+        <Pagination currentPage={currentPage} totalPages={totalPages} />
       )}
     </main>
   );
