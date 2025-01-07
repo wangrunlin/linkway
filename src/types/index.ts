@@ -1,3 +1,8 @@
+export type Params = {
+  page?: number;
+  query?: string;
+};
+
 export type ApiResponse<T> = {
   list: (LinkWayResource<T> & { Id: string })[];
   pageInfo?: {

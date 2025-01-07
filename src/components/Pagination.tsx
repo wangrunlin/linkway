@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Pagination as ShadPagination,
   PaginationContent,
@@ -7,6 +9,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useSearchParams } from "next/navigation";
 
 interface PaginationProps {
   currentPage: number;
@@ -14,6 +17,14 @@ interface PaginationProps {
 }
 
 export function Pagination({ currentPage, totalPages }: PaginationProps) {
+  const searchParams = useSearchParams();
+
+  const createPageUrl = (pageNumber: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", pageNumber.toString());
+    return `?${params.toString()}`;
+  };
+
   const renderPageNumbers = () => {
     const pages = [];
     const showEllipsisStart = currentPage > 3;
@@ -27,7 +38,10 @@ export function Pagination({ currentPage, totalPages }: PaginationProps) {
       ) {
         pages.push(
           <PaginationItem key={i}>
-            <PaginationLink href={`?page=${i}`} isActive={currentPage === i}>
+            <PaginationLink
+              href={createPageUrl(i)}
+              isActive={currentPage === i}
+            >
               {i}
             </PaginationLink>
           </PaginationItem>
@@ -56,7 +70,7 @@ export function Pagination({ currentPage, totalPages }: PaginationProps) {
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            href={`?page=${currentPage - 1}`}
+            href={createPageUrl(currentPage - 1)}
             className={currentPage <= 1 ? "pointer-events-none opacity-50" : ""}
           />
         </PaginationItem>
@@ -65,7 +79,7 @@ export function Pagination({ currentPage, totalPages }: PaginationProps) {
 
         <PaginationItem>
           <PaginationNext
-            href={`?page=${currentPage + 1}`}
+            href={createPageUrl(currentPage + 1)}
             className={
               currentPage >= totalPages ? "pointer-events-none opacity-50" : ""
             }

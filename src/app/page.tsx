@@ -3,7 +3,7 @@ import { getVideoData } from "@/lib/getVideoData";
 import Link from "next/link";
 
 export default async function Home() {
-  const { list } = await getVideoData(1);
+  const { list } = await getVideoData();
 
   return (
     <div className="py-8">

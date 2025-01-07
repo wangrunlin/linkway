@@ -1,12 +1,17 @@
 import { PAGE_SIZE, NOCODB_TABLE_ID, NOCODB_API_TOKEN } from "@/config";
-import { ApiResponse } from "@/types";
+import { ApiResponse, Params } from "@/types";
 
-export async function getList<T>(page: number): Promise<ApiResponse<T>> {
+export async function getList<T>({
+  page = 1,
+  query,
+}: Params): Promise<ApiResponse<T>> {
   const offset = (page - 1) * PAGE_SIZE;
 
   try {
     const response = await fetch(
-      `https://nocodb.alin.run/api/v2/tables/${NOCODB_TABLE_ID}/records?limit=${PAGE_SIZE}&shuffle=0&offset=${offset}`,
+      `https://nocodb.alin.run/api/v2/tables/${NOCODB_TABLE_ID}/records?limit=${PAGE_SIZE}&shuffle=0&offset=${offset}${
+        query ? buildQuery(query) : ""
+      }`,
       {
         headers: {
           accept: "application/json",
@@ -21,6 +26,7 @@ export async function getList<T>(page: number): Promise<ApiResponse<T>> {
     }
 
     const data = await response.json();
+    console.log(data);
 
     if (!data.pageInfo?.totalRows) {
       data.pageInfo = {
@@ -46,4 +52,7 @@ export async function getList<T>(page: number): Promise<ApiResponse<T>> {
       },
     };
   }
+}
+function buildQuery(query: string) {
+  return `&where=(title,like,%${query}%)`;
 }

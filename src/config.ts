@@ -22,7 +22,7 @@ export const baseURL =
   (globalThis.location && globalThis.location.origin) ||
   defaultBaseURL;
 
-export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 24;
+export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 12;
 
 export const NOCODB_API_TOKEN = process.env.NOCODB_API_TOKEN!;
 export const NOCODB_TABLE_ID = process.env.NOCODB_TABLE_ID!;
