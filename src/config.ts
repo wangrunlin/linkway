@@ -26,6 +26,7 @@ export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 12;
 
 export const NOCODB_API_TOKEN = process.env.NOCODB_API_TOKEN!;
 export const NOCODB_TABLE_ID = process.env.NOCODB_TABLE_ID!;
+export const NOCODB_BASE_URL = process.env.NOCODB_BASE_URL || "https://app.nocodb.com";
 
 if (!NOCODB_API_TOKEN || !NOCODB_TABLE_ID) {
   throw new Error("NOCODB_API_TOKEN or NOCODB_TABLE_ID is not set");

@@ -1,14 +1,14 @@
 {
   "name": "linkway",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "tsx src/scripts/seedDatabase.ts",
-    "create-table": "tsx src/scripts/createTable.ts"
+    "seed": "tsx src/scripts/commands/seedDatabase.ts",
+    "create-table": "tsx src/scripts/commands/createTable.ts"
   },
   "dependencies": {
     "@next/third-parties": "^15.1.4",

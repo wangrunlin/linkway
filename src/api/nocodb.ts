@@ -1,4 +1,9 @@
-import { PAGE_SIZE, NOCODB_TABLE_ID, NOCODB_API_TOKEN } from "@/config";
+import {
+  PAGE_SIZE,
+  NOCODB_TABLE_ID,
+  NOCODB_API_TOKEN,
+  NOCODB_BASE_URL,
+} from "@/config";
 import { ApiResponse, Params, LinkWayResource } from "@/types";
 
 export const getList = async ({
@@ -10,7 +15,7 @@ export const getList = async ({
 
   try {
     const baseUrl = new URL(
-      `https://nocodb.alin.run/api/v2/tables/${NOCODB_TABLE_ID}/records`
+      `${NOCODB_BASE_URL}/api/v2/tables/${NOCODB_TABLE_ID}/records`
     );
 
     baseUrl.searchParams.append("limit", PAGE_SIZE.toString());
@@ -75,7 +80,7 @@ const buildQuery = (query: string) => {
 
 export async function createResource(resource: Partial<LinkWayResource>) {
   const response = await fetch(
-    `https://nocodb.alin.run/api/v2/tables/${NOCODB_TABLE_ID}/records`,
+    `${NOCODB_BASE_URL}/api/v2/tables/${NOCODB_TABLE_ID}/records`,
     {
       method: "POST",
       headers: {
