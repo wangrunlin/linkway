@@ -1,7 +1,15 @@
-import type { NextConfig } from "next";
+import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+      },
+      // 添加其他需要的图片域名
+    ],
+  },
 };
 
 export default nextConfig;

@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useDebouncedCallback } from "use-debounce";
+import { updateSearchHistory } from "@/lib/searchHistory";
 
 interface SearchFormProps {
   defaultValue?: string;
@@ -28,19 +29,21 @@ export function SearchForm({ defaultValue = "" }: SearchFormProps) {
       params.delete("page");
 
       router.push(`/search?${params.toString()}`);
+      updateSearchHistory(query.trim());
     },
-    [router, searchParams]
+    [router, searchParams, query]
   );
 
   // 使用防抖处理搜索，300ms 延迟
   const debouncedSearch = useDebouncedCallback(executeSearch, 300);
 
   const handleSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
+    (e: React.FormEvent) => {
       e.preventDefault();
-      executeSearch(query);
+      if (!query.trim()) return;
+      router.push(`/search?q=${encodeURIComponent(query.trim())}`);
     },
-    [query, executeSearch]
+    [query, router]
   );
 
   const handleChange = useCallback(
@@ -53,7 +56,9 @@ export function SearchForm({ defaultValue = "" }: SearchFormProps) {
   );
 
   const handleBlur = useCallback(() => {
-    executeSearch(query);
+    if (query.trim()) {
+      executeSearch(query);
+    }
   }, [query, executeSearch]);
 
   // 组件卸载时执行未完成的搜索

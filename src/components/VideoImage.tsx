@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
-interface VideoImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+interface VideoImageProps
+  extends Omit<React.ComponentProps<typeof Image>, "src" | "alt" | "fill"> {
   src: string;
   alt: string;
 }
@@ -19,26 +21,24 @@ export default function VideoImage({
 
   return (
     <div className="relative w-full h-full">
-      {/* 加载动画 */}
       {isLoading && (
         <div className="absolute inset-0 bg-gray-100 dark:bg-gray-700 animate-pulse" />
       )}
 
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={hasError ? "/placeholder.png" : src}
         alt={alt}
         className={cn(
-          "w-full h-full transition-opacity duration-300",
+          "object-cover transition-opacity duration-300",
           isLoading ? "opacity-0" : "opacity-100",
           className
         )}
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         referrerPolicy="no-referrer"
-        loading="lazy"
+        priority={false}
         onLoad={() => setIsLoading(false)}
-        onError={(e) => {
-          const img = e.currentTarget;
-          img.onerror = null;
+        onError={() => {
           setHasError(true);
           setIsLoading(false);
         }}
