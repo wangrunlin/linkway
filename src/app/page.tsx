@@ -28,7 +28,7 @@ export default async function Home() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {list.slice(0, 6).map((video) => (
-            <VideoCard key={video.Id} {...video} />
+            <VideoCard key={video.id} {...video} />
           ))}
         </div>
       </section>

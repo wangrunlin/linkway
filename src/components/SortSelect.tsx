@@ -16,6 +16,7 @@ export function SortSelect({ defaultValue }: { defaultValue: string }) {
   const handleValueChange = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("sort", value);
+    params.set("page", "1");
     router.push(`/search?${params.toString()}`);
   };
 

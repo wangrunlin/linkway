@@ -1,3 +1,5 @@
+// reference: https://meta-apis-v2.nocodb.com/#tag/Tables/operation/db-table-create
+
 import { BASE_ID } from "@/scripts/config/env";
 import { tableSchema } from "@/scripts/data/schema";
 import { makeRequest } from "@/scripts/utils/api";

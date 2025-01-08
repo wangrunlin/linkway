@@ -32,7 +32,7 @@ export const getList = async ({
       baseUrl.searchParams.append("where", queryParam);
     }
 
-    console.log(baseUrl);
+    console.info({ baseUrl: baseUrl.toString() });
 
     const response = await fetch(baseUrl.toString(), {
       headers: {

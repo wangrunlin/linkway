@@ -5,7 +5,7 @@ export type Params = {
 };
 
 export type ApiResponse = {
-  list: (LinkWayResource & { Id: string })[];
+  list: LinkWayResource[];
   pageInfo?: {
     pageSize: number;
     totalRows: number;
@@ -22,6 +22,7 @@ export interface LinkWayResource {
   description?: string; // 资源描述，可选
   url: string; // 资源链接
   thumbnail?: string; // 缩略图 URL，可选
+  order?: number; // 排序权重，数字越小越靠前
   tags?: string[]; // 标签，用于分类和搜索
   metadata?: JSON; // 元数据，用于存储特定类型资源的额外信息
 

@@ -1,4 +1,6 @@
 import { Column, TableSchema } from "@/scripts/types";
+import { sampleData } from "@/scripts/data/sample";
+import type { LinkWayResource } from "@/types";
 
 export const TABLE_NAME = "linkway-demo";
 
@@ -8,6 +10,11 @@ export const columns: Column[] = [
     description: "ID",
     uidt: "ID",
     rqd: true,
+  },
+  {
+    title: "order",
+    description: "排序",
+    uidt: "Number",
   },
   {
     title: "title",
@@ -27,17 +34,25 @@ export const columns: Column[] = [
     rqd: true,
   },
   {
+    title: "thumbnail",
+    description: "缩略图",
+    uidt: "URL",
+  },
+  {
     title: "type",
     description: "类型",
     uidt: "SingleSelect",
     cdf: "video",
     colOptions: {
-      options: [
-        { title: "video" },
-        { title: "article" },
-        { title: "product" },
-        { title: "shop" },
-      ],
+      options: Array.from(
+        new Set(
+          sampleData
+            .map((item: Partial<LinkWayResource>) => item.type)
+            .filter((type): type is string => type !== undefined)
+        )
+      ).map((type) => ({
+        title: type,
+      })),
     },
   },
   {
@@ -45,14 +60,15 @@ export const columns: Column[] = [
     description: "标签",
     uidt: "MultiSelect",
     colOptions: {
-      options: [
-        { title: "React" },
-        { title: "TypeScript" },
-        { title: "前端开发" },
-        { title: "JavaScript" },
-        { title: "Vue" },
-        { title: "Node.js" },
-      ],
+      options: Array.from(
+        new Set(
+          sampleData
+            .flatMap((item: Partial<LinkWayResource>) => item.tags ?? [])
+            .filter((tag): tag is string => tag !== undefined)
+        )
+      ).map((tag) => ({
+        title: tag,
+      })),
     },
   },
   {
@@ -74,7 +90,6 @@ export const columns: Column[] = [
     title: "viewCount",
     description: "浏览量",
     uidt: "Number",
-    cdf: "0",
   },
 ];
 
