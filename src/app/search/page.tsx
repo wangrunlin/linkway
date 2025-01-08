@@ -2,18 +2,21 @@ import { Pagination } from "@/components/Pagination";
 import { VideoCard } from "@/components/VideoCard";
 import { getVideoData } from "@/lib/getVideoData";
 import { SearchForm } from "@/components/SearchForm";
+import { SortSelect } from "@/components/SortSelect";
 
 export default async function Search({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string; q?: string }>;
+  searchParams: Promise<{ page?: string; q?: string; sort?: string }>;
 }) {
   const params = await searchParams;
   const currentPage = Number(params.page) || 1;
   const query = params.q || "";
+  const sort = params.sort || "";
   const { list, totalPages } = await getVideoData({
     page: currentPage,
     query: params.q,
+    sort,
   });
 
   return (
@@ -29,6 +32,10 @@ export default async function Search({
 
       {list.length > 0 ? (
         <>
+          <div className="flex justify-end mb-4">
+            <SortSelect defaultValue={sort} />
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {list.map((video) => (
               <VideoCard key={video.Id} {...video} />

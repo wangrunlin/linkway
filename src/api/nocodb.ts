@@ -1,32 +1,47 @@
 import { PAGE_SIZE, NOCODB_TABLE_ID, NOCODB_API_TOKEN } from "@/config";
-import { ApiResponse, Params } from "@/types";
+import { ApiResponse, Params, LinkWayResource } from "@/types";
 
-export async function getList<T>({
+export const getList = async ({
   page = 1,
   query,
-}: Params): Promise<ApiResponse<T>> {
+  sort,
+}: Params): Promise<ApiResponse> => {
   const offset = (page - 1) * PAGE_SIZE;
 
   try {
-    const response = await fetch(
-      `https://nocodb.alin.run/api/v2/tables/${NOCODB_TABLE_ID}/records?limit=${PAGE_SIZE}&shuffle=0&offset=${offset}${
-        query ? buildQuery(query) : ""
-      }`,
-      {
-        headers: {
-          accept: "application/json",
-          "xc-token": NOCODB_API_TOKEN,
-        },
-        next: { revalidate: 300 },
-      }
+    const baseUrl = new URL(
+      `https://nocodb.alin.run/api/v2/tables/${NOCODB_TABLE_ID}/records`
     );
+
+    baseUrl.searchParams.append("limit", PAGE_SIZE.toString());
+    baseUrl.searchParams.append("shuffle", "0");
+    baseUrl.searchParams.append("offset", offset.toString());
+
+    baseUrl.searchParams.append(
+      "sort",
+      sort ? `${sort},-datePublished` : "-datePublished"
+    );
+
+    if (query) {
+      const queryParam = buildQuery(query);
+      baseUrl.searchParams.append("where", queryParam);
+    }
+
+    console.log(baseUrl);
+
+    const response = await fetch(baseUrl.toString(), {
+      headers: {
+        accept: "application/json",
+        "xc-token": NOCODB_API_TOKEN,
+      },
+      next: { revalidate: 300 },
+    });
 
     if (!response.ok) {
       throw new Error("Failed to fetch videos");
     }
 
     const data = await response.json();
-    console.log(data);
 
     if (!data.pageInfo?.totalRows) {
       data.pageInfo = {
@@ -52,7 +67,28 @@ export async function getList<T>({
       },
     };
   }
-}
-function buildQuery(query: string) {
-  return `&where=(title,like,%${query}%)`;
+};
+
+const buildQuery = (query: string) => {
+  return `(title,like,%${query}%)~or(description,like,%${query}%)`;
+};
+
+export async function createResource(resource: Partial<LinkWayResource>) {
+  const response = await fetch(
+    `https://nocodb.alin.run/api/v2/tables/${NOCODB_TABLE_ID}/records`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "xc-auth": NOCODB_API_TOKEN,
+      },
+      body: JSON.stringify(resource),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(`Failed to create resource: ${response.statusText}`);
+  }
+
+  return response.json();
 }

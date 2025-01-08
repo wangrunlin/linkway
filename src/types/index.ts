@@ -1,10 +1,11 @@
 export type Params = {
   page?: number;
   query?: string;
+  sort?: string;
 };
 
-export type ApiResponse<T> = {
-  list: (LinkWayResource<T> & { Id: string })[];
+export type ApiResponse = {
+  list: (LinkWayResource & { Id: string })[];
   pageInfo?: {
     pageSize: number;
     totalRows: number;
@@ -14,9 +15,7 @@ export type ApiResponse<T> = {
   };
 };
 
-export interface LinkWayResource<
-  T = VideoMetadata | ProductMetadata | ArticleMetadata | ShopMetadata
-> {
+export interface LinkWayResource {
   id: string; // 资源的唯一标识符，可以使用 UUID 生成
   type: string; // 资源类型，例如 "product"、"article"、"shop"、"video" 等
   title: string; // 资源标题
@@ -24,7 +23,7 @@ export interface LinkWayResource<
   url: string; // 资源链接
   thumbnail?: string; // 缩略图 URL，可选
   tags?: string[]; // 标签，用于分类和搜索
-  metadata?: T; // 元数据，用于存储特定类型资源的额外信息
+  metadata?: JSON; // 元数据，用于存储特定类型资源的额外信息
 
   // 可选的通用属性，根据需要添加
   author?: string; // 作者/发布者
@@ -32,30 +31,29 @@ export interface LinkWayResource<
   dateModified?: string; // 修改日期，ISO 8601 格式
   rating?: number; // 评分
   reviewCount?: number; // 评论数
-}
 
-// 针对不同资源类型的元数据接口示例
-
-export interface VideoMetadata {
+  // 针对不同资源类型的元数据接口示例
+  // export interface VideoMetadata {
   duration?: number;
   viewCount?: number;
-}
+  // }
 
-export interface ProductMetadata {
+  // export interface ProductMetadata {
   price: number;
   currency: string;
   sku?: string;
   brand?: string;
   category?: string;
-}
+  // }
 
-export interface ArticleMetadata {
+  // export interface ArticleMetadata {
   keywords?: string[];
   wordCount?: number;
-}
+  // }
 
-export interface ShopMetadata {
+  // export interface ShopMetadata {
   address?: string;
   contact?: string;
   openingHours?: string;
+  // }
 }

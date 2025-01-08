@@ -1,9 +1,9 @@
 import { getList } from "@/api/nocodb";
 import { PAGE_SIZE } from "@/config";
-import { Params, VideoMetadata } from "@/types";
+import { Params } from "@/types";
 
-export async function getVideoData({ page = 1, query }: Params = {}) {
-  const data = await getList<VideoMetadata>({ page, query });
+export async function getVideoData({ page = 1, query, sort }: Params = {}) {
+  const data = await getList({ page, query, sort });
   const { list, pageInfo } = data;
 
   const totalRows = pageInfo?.totalRows || list.length;
